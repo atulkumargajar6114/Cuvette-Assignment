@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import styles from './CreateNotes.module.css';
 import vector from '../../assets/Vector (2).png';
 import axios from 'axios';
-
+import { BACKEND_URL } from '../../constant';
 function CreateNotes({ selectedGroup }) {
   const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState('');
@@ -12,7 +12,7 @@ function CreateNotes({ selectedGroup }) {
   useEffect(() => {
      const fetchNotes = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/note/all/${selectedGroup._id}`);
+        const response = await axios.get(`${BACKEND_URL}/api/note/all/${selectedGroup._id}`);
         setNotes(response.data);
       } catch (error) {
         console.error('Error fetching notes:', error);
@@ -32,7 +32,7 @@ function CreateNotes({ selectedGroup }) {
 
   const handleSaveNote = async (Note) => {
     try {
-      const response = await axios.post('http://localhost:3000/api/note/create', Note);
+      const response = await axios.post(`${BACKEND_URL}/api/note/create`, Note);
       console.log(response.data);
       const newNote = response.data.note;
       setNotes(prevNotes => [...prevNotes, newNote]);

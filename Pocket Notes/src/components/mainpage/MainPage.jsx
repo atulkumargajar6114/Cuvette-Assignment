@@ -5,6 +5,7 @@ import CreateGroup from '../creategroup/CreateGroup';
 import CreateNotes from '../createnote/CreateNotes';
 import bg from '../../assets/image-removebg-preview 1.png'
 import axios from 'axios';
+import { BACKEND_URL } from '../../constant';
 
 const MainPage = () => {
   const [showComponent,setShowComponent]=useState(false);
@@ -16,7 +17,7 @@ const MainPage = () => {
   useEffect(()=>{
     const fetchGroups = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/group/all');
+        const response = await axios.get(`${BACKEND_URL}/api/group/all`);
         setGroups(response.data);
       } catch (error) {
         console.error('Error fetching groups:', error);
@@ -49,7 +50,7 @@ const MainPage = () => {
   const handleSaveGroup= async (groupData)=>{
     
     try {
-      const response = await axios.post('http://localhost:3000/api/group/create', groupData);
+      const response = await axios.post(`${BACKEND_URL}/api/group/create`, groupData);
       const newGroup = response.data.group;
       setGroups(prevGroups => [...prevGroups, newGroup]);
     } catch (error) {
